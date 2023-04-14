@@ -3,22 +3,16 @@
 #include "fileManager.h"
 
 int main() {
+  FILE *f;
   char operation = '#';
+  int amountRecords, input;
 
   do {
-    int amountRecords, input;
-    scanf("%d", &amountRecords);
-
-    FILE *f;
     f = fopen(OUTPUT_FILE, "rb");
-
+    
     if(f == NULL) {
+      scanf("%d", &amountRecords);
       createOutputFile(amountRecords);
-
-      while(1) {
-        if (scanf("%d", &input) == EOF) break;
-        insertRecord(input);
-      }
     }
     else {
       if(operation == 'i') {
@@ -35,6 +29,5 @@ int main() {
     }
 
     scanf("%c", &operation);
-  }
-  while(operation != 'e');
+  } while(operation != 'e');
 }

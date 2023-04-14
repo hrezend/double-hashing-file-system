@@ -154,7 +154,7 @@ void insertRecord(int input) {
     int h2 = calculateSecondHashing(input, header.possibleTotalRecords);
 
     if(header.countInsertedRecords >= header.possibleTotalRecords) {
-      printf("Não foi possível inserir o registro [%d], pois o arquivo está cheio.\n", input);
+      printf("o elemento %d não foi inserido pois o arquivo já está cheio\n", input);
       fclose(f);
       return;
     }
@@ -168,6 +168,8 @@ void insertRecord(int input) {
 
     header.countInsertedRecords++;
     setFileHeader(header, f);
+
+    printf("o elemento [%d]: %d foi inserido com sucesso\n", index, r.value);
   }
   fclose(f);
 }
@@ -203,6 +205,7 @@ void removeRecord(int input) {
     }
 
     if(r.value == input) {
+      printf("o elemento [%d]: %d foi removido com sucesso\n", index, r.value);
       r.value = -1;
 
       fseek(f, position, SEEK_SET);
@@ -227,6 +230,7 @@ void printFile() {
   else {
     fileHeader header = getFileHeader(f);
 
+    printf("##### DOUBLE HASHING FILE #####\n");
     for(int i = 0; i < header.possibleTotalRecords; i++) {
       record r;
       int position = sizeof(fileHeader) + (sizeof(record)*i);
@@ -236,6 +240,7 @@ void printFile() {
 
       printf("[%d]: %d\n", i, r.value);
     }
+    printf("###############################\n");
   }
   fclose(f);
 }
